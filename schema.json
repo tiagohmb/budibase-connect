@@ -1,0 +1,28 @@
+{
+  "type": "datasource",
+  "metadata": {},
+  "schema": {
+    "docs": "https://docs.budibase.com",
+    "friendlyName": "Basic HTTP",
+    "type": "API",
+    "description": "Consulta proprietaria de dados",
+    "datasource": {
+      "url": {
+        "type": "string",
+        "required": true
+      },
+      "database": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "query": {
+      "consultar": {
+        "type": "sql"
+      },
+      "executar": {
+        "type": "sql"
+      }
+    }
+  }
+}
