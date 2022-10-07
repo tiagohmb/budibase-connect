@@ -1,16 +1,5 @@
-import { HttpStatusCode } from "./../node_modules/axios/index.d";
 import { IntegrationBase } from "@budibase/types";
 import fetch from "node-fetch";
-
-interface Query {
-  method: string;
-  body?: string;
-  headers?: { [key: string]: string };
-}
-
-interface jsonObj {
-  sql: string;
-}
 
 class CustomIntegration implements IntegrationBase {
   private readonly url: string;
@@ -21,19 +10,27 @@ class CustomIntegration implements IntegrationBase {
     this.database = config.database;
   }
 
-  async create(query: { json: object }) {}
+  async create(query: { sql: string }) {
+    return this.executar(query);
+  }
 
-  async read(query: { queryString: string }) {}
+  async read(query: { sql: string }) {
+    return this.consultar(query);
+  }
 
-  async update(query: { json: object }) {}
+  async update(query: { sql: string }) {
+    return this.executar(query);
+  }
 
-  async delete(query: { id: string }) {}
+  async delete(query: { sql: string }) {
+    return this.executar(query);
+  }
 
-  async consultar(query: { json: jsonObj }) {
+  async consultar(query: { sql: string }) {
     const path = this.url + "/api/consultar/v3";
     const obj = {
       database: this.database,
-      sql: Buffer.from(query.json.sql).toString("base64"),
+      sql: Buffer.from(query.sql).toString("base64"),
     };
 
     const response = await fetch(path, {
@@ -48,11 +45,11 @@ class CustomIntegration implements IntegrationBase {
     return data;
   }
 
-  async executar(query: { json: jsonObj }) {
+  async executar(query: { sql: string }) {
     const path = this.url + "/api/executar/v3";
     const obj = {
       database: this.database,
-      lista: [Buffer.from(query.json.sql).toString("base64")],
+      lista: [Buffer.from(query.sql).toString("base64")],
     };
 
     const response: any = await fetch(path, {

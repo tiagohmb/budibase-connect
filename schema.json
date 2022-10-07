@@ -3,7 +3,7 @@
   "metadata": {},
   "schema": {
     "docs": "https://docs.budibase.com",
-    "friendlyName": "Basic HTTP",
+    "friendlyName": "connect",
     "type": "API",
     "description": "Performs a basic HTTP calls to a URL",
     "datasource": {
@@ -18,35 +18,40 @@
     },
     "query": {
       "create": {
-        "type": "json"
+        "type": "fields",
+        "fields": {
+          "sql": {
+            "required": true,
+            "type": "string"
+          }
+        }
       },
       "read": {
         "type": "fields",
         "fields": {
-          "queryString": {
-            "display": "Query string",
-            "type": "string",
-            "required": false
+          "sql": {
+            "required": true,
+            "type": "string"
           }
         }
       },
       "update": {
-        "type": "json"
+        "type": "fields",
+        "fields": {
+          "sql": {
+            "required": true,
+            "type": "string"
+          }
+        }
       },
       "delete": {
         "type": "fields",
         "fields": {
-          "id": {
-            "type": "string",
-            "required": true
+          "sql": {
+            "required": true,
+            "type": "string"
           }
         }
-      },
-      "consultar": {
-        "type": "json"
-      },
-      "executar": {
-        "type": "json"
       }
     }
   }
