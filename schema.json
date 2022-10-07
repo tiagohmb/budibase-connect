@@ -43,22 +43,10 @@
         }
       },
       "consultar": {
-        "type": "fields",
-        "fields": {
-          "sql": {
-            "type": "string",
-            "required": true
-          }
-        }
+        "type": "json"
       },
       "executar": {
-        "type": "fields",
-        "fields": {
-          "sql": {
-            "type": "string",
-            "required": true
-          }
-        }
+        "type": "json"
       }
     }
   }

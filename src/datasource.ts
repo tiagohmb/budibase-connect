@@ -1,6 +1,6 @@
+import { HttpStatusCode } from "./../node_modules/axios/index.d";
 import { IntegrationBase } from "@budibase/types";
-import axios from "axios";
-import https from "https";
+import fetch from "node-fetch";
 
 interface Query {
   method: string;
@@ -8,29 +8,17 @@ interface Query {
   headers?: { [key: string]: string };
 }
 
+interface jsonObj {
+  sql: string;
+}
+
 class CustomIntegration implements IntegrationBase {
   private readonly url: string;
   private readonly database: string;
-  private readonly agent: https.Agent;
 
   constructor(config: { url: string; database: string }) {
     this.url = config.url;
     this.database = config.database;
-    this.agent = new https.Agent({
-      rejectUnauthorized: false,
-    });
-  }
-
-  request(url: string) {
-    const instance = axios.create({
-      baseURL: this.url,
-      httpsAgent: this.agent,
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        Accept: "application/json",
-      },
-    });
-    return instance;
   }
 
   async create(query: { json: object }) {}
@@ -41,20 +29,46 @@ class CustomIntegration implements IntegrationBase {
 
   async delete(query: { id: string }) {}
 
-  async consultar(query: { sql: String }) {
+  async consultar(query: { json: jsonObj }) {
+    const path = this.url + "/api/consultar/v3";
     const obj = {
       database: this.database,
-      sql: Buffer.from(query.sql).toString("base64"),
+      sql: Buffer.from(query.json.sql).toString("base64"),
     };
-    return this.request(this.url).post("/consultar/v3", JSON.stringify(obj));
+
+    const response = await fetch(path, {
+      method: "post",
+      body: JSON.stringify(obj),
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
   }
 
-  async executar(query: { sql: String }) {
+  async executar(query: { json: jsonObj }) {
+    const path = this.url + "/api/executar/v3";
     const obj = {
       database: this.database,
-      lista: [Buffer.from(query.sql).toString("base64")],
+      lista: [Buffer.from(query.json.sql).toString("base64")],
     };
-    return this.request(this.url).post("/executar/v3", JSON.stringify(obj));
+
+    const response: any = await fetch(path, {
+      method: "post",
+      body: JSON.stringify(obj),
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        Accept: "application/json",
+      },
+    });
+
+    if (response.ok) {
+      return { mensagem: "executado com sucesso!" };
+    } else {
+      throw new Error(response);
+    }
   }
 }
 

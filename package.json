@@ -1,6 +1,6 @@
 {
   "name": "firebird-connect",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "An amazing Budibase datasource!",
   "main": "src/index.ts",
   "license": "MIT",
@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@budibase/types": "^2.0.13",
-    "axios": "^1.1.0",
     "node-fetch": "^2"
   },
   "devDependencies": {
