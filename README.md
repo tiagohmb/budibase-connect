@@ -1,8 +1,8 @@
-# APSDataSource
+# Firebird-connect
 This is a readme for your new Budibase plugin.
 
 # Description
-Conexão com uma API Rest Connect
+An amazing Budibase datasource!
 
 Find out more about [Budibase](https://github.com/Budibase/budibase).
 

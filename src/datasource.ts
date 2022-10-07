@@ -1,7 +1,14 @@
+import { IntegrationBase } from "@budibase/types";
 import axios from "axios";
 import https from "https";
 
-class CustomIntegration {
+interface Query {
+  method: string;
+  body?: string;
+  headers?: { [key: string]: string };
+}
+
+class CustomIntegration implements IntegrationBase {
   private readonly url: string;
   private readonly database: string;
   private readonly agent: https.Agent;
@@ -25,6 +32,14 @@ class CustomIntegration {
     });
     return instance;
   }
+
+  async create(query: { json: object }) {}
+
+  async read(query: { queryString: string }) {}
+
+  async update(query: { json: object }) {}
+
+  async delete(query: { id: string }) {}
 
   async consultar(query: { sql: String }) {
     const obj = {

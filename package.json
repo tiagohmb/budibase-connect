@@ -1,7 +1,7 @@
 {
-  "name": "aps-datasource",
+  "name": "firebird-connect",
   "version": "1.0.0",
-  "description": "Conexão com uma API Rest Connect",
+  "description": "An amazing Budibase datasource!",
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@budibase/types": "^2.0.13",
-    "axios": "^1.1.0"
+    "axios": "^1.1.0",
+    "node-fetch": "^2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
