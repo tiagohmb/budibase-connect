@@ -18,10 +18,22 @@
     },
     "query": {
       "consultar": {
-        "type": "sql"
+        "type": "fields",
+        "fields": {
+          "sql": {
+            "type": "string",
+            "required": true
+          }
+        }
       },
       "executar": {
-        "type": "sql"
+        "type": "fields",
+        "fields": {
+          "sql": {
+            "type": "string",
+            "required": true
+          }
+        }
       }
     }
   }

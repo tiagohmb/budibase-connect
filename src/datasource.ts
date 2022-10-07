@@ -1,13 +1,7 @@
-import { SqlQuery } from "@budibase/types";
 import axios from "axios";
 import https from "https";
 
-export interface IntegrationAPS {
-  consultar?(query: any): Promise<any[] | any>;
-  executar?(query: any): Promise<any[] | any>;
-}
-
-class CustomIntegration implements IntegrationAPS {
+class CustomIntegration {
   private readonly url: string;
   private readonly database: string;
   private readonly agent: https.Agent;
@@ -32,7 +26,7 @@ class CustomIntegration implements IntegrationAPS {
     return instance;
   }
 
-  async consultar(query: SqlQuery) {
+  async consultar(query: { sql: String }) {
     const obj = {
       database: this.database,
       sql: Buffer.from(query.sql).toString("base64"),
@@ -40,7 +34,7 @@ class CustomIntegration implements IntegrationAPS {
     return this.request(this.url).post("/consultar/v3", JSON.stringify(obj));
   }
 
-  async executar(query: SqlQuery) {
+  async executar(query: { sql: String }) {
     const obj = {
       database: this.database,
       lista: [Buffer.from(query.sql).toString("base64")],
